@@ -1,94 +1,102 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import client from '../../ApolloClient'; // Importuojame sukonfigūruotą Apollo Client
+import { CURRENT_USER_QUERY } from '../graphql/queries'; // Reikės sukurti šią užklausą
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('authToken')); // Skaitome token'ą
+    const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+    const [loading, setLoading] = useState(true); // Pradinio krovimo būsena
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-         setUser(userData);
-         setIsAuthenticated(true);
-      } catch (error) {
-         console.error("Failed to parse user from localStorage", error);
-         localStorage.removeItem('user');
-      }
-    }
-    setLoading(false);
-  }, []);
-
-  const login = async (email, password) => {
-    try {
-      const response = await fetch(`http://localhost:3001/users?email=${email}&password=${password}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const users = await response.json();
-
-      if (users.length === 1) {
-        const userData = users[0];
-        setUser(userData);
-        setIsAuthenticated(true);
-        localStorage.setItem('user', JSON.stringify(userData));
-        return true;
-      } else {
-        throw new Error('Invalid credentials');
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      return false;
-    }
-  };
-
-  const register = async (email, password) => {
-     try {
-        const checkResponse = await fetch(`http://localhost:3001/users?email=${email}`);
-        const existingUsers = await checkResponse.json();
-        if (existingUsers.length > 0) {
-            throw new Error('Email already exists.');
+    // Funkcija vartotojo duomenims gauti pagal token'ą
+    const fetchCurrentUser = useCallback(async () => {
+        const currentToken = localStorage.getItem('authToken'); // Patikriname naujausią token'ą
+        if (!currentToken) {
+            setLoading(false);
+            return; // Nieko nedarome, jei tokeno nėra
         }
 
-        const response = await fetch('http://localhost:3001/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
-        if (!response.ok) throw new Error('Registration failed on server.');
+        console.log("AuthContext: Fetching current user...");
+        try {
+            // Naudojame Apollo Client tiesiogiai čia (galima, nes jis sukonfigūruotas)
+            // Naudojame fetchPolicy 'network-only', kad neimtų iš kešo, jei vartotojas pasikeitė
+            const { data, error } = await client.query({
+                query: CURRENT_USER_QUERY,
+                fetchPolicy: 'network-only'
+            });
 
-        const newUser = await response.json();
-        setUser(newUser);
+            if (error) {
+                // Jei klaida (pvz., tokenas nebegalioja), išvalome autentifikaciją
+                console.error("AuthContext: Error fetching current user:", error.message);
+                logout(); // Naudojam logout funkciją viskam išvalyti
+            } else if (data?.currentUser) {
+                console.log("AuthContext: Current user fetched:", data.currentUser);
+                setUser(data.currentUser); // Nustatome gautus vartotojo duomenis
+                setIsAuthenticated(true); // Užtikriname, kad autentifikuotas
+                setToken(currentToken); // Užtikriname, kad token state'as atitinka localStorage
+            } else {
+                // Jei query pavyko, bet negavome user (neturėtų nutikti su validžiu tokenu)
+                 console.warn("AuthContext: currentUser query succeeded but returned no user.");
+                 logout();
+            }
+        } catch (err) {
+            // Kitokios klaidos
+            console.error("AuthContext: Unexpected error fetching user:", err);
+            logout();
+        } finally {
+            setLoading(false); // Baigėme krovimą
+        }
+    }, [navigate]); // navigate įtraukiam dėl logout naudojimo
+
+    useEffect(() => {
+        // Vykdom tik kartą, kai komponentas užkraunamas
+        fetchCurrentUser();
+    }, [fetchCurrentUser]); // Priklausomybė - fetchCurrentUser
+
+    // Login funkcija: dabar priima tokeną ir vartotojo duomenis iš komponento
+    const login = useCallback((newToken, userData) => {
+        console.log("AuthContext: Logging in user:", userData);
+        localStorage.setItem('authToken', newToken);
+        setToken(newToken);
+        setUser(userData);
         setIsAuthenticated(true);
-        localStorage.setItem('user', JSON.stringify(newUser));
-         return true;
-     } catch (error) {
-         console.error("Registration failed:", error);
-         return false;
-     }
-  };
+        // navigate('/'); // Galima nukreipti čia arba komponente
+    }, []); // Nepriklauso nuo išorės, bet useCallback gerai turėti
 
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
+    // Logout funkcija: išvalo viską
+    const logout = useCallback(() => {
+        console.log("AuthContext: Logging out");
+        localStorage.removeItem('authToken');
+        setToken(null);
+        setUser(null);
+        setIsAuthenticated(false);
+        // Išvalom Apollo Client kešą, kad neliktų senų duomenų
+        client.resetStore();
+        navigate('/login');
+    }, [navigate]); // Priklauso nuo navigate
 
-  if (loading) {
-      return <div>Loading authentication...</div>;
-  }
+    // Kol tikrinamas pradinis tokenas, rodome krovimą
+    if (loading) {
+        return <div>Tikrinama autentifikacija...</div>;
+    }
 
-  return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, register, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    // Perduodame reikšmes per Context Provider
+    return (
+        <AuthContext.Provider value={{ user, token, isAuthenticated, loading, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
+// Sukuriame hook'ą patogesniam naudojimui
 export const useAuth = () => {
-  return useContext(AuthContext);
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
 };
