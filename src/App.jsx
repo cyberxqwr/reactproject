@@ -4,6 +4,31 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { Routes, Route, Link, /*useNavigate*/ } from 'react-router-dom';
 import './index.css'
 import LoginPage from './pages/LoginPage';
+import UploadBlog from './pages/UploadBlog';
+import MainPage from './pages/MainPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+
+function Footer() {
+
+  return (
+
+    <footer class="bg-bermuda text-white mt-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 justify-items-center mx-8 pt-4">
+        <div class="antialiased px-24 py-4">
+          <p class="lg:text-xl md:text-l sm:text-m drop-shadow">Naudinga</p>
+        </div>
+        <div class="antialiased px-24 py-4">
+          <p class="lg:text-xl md:text-l sm:text-m drop-shadow">Sekite mus</p>
+        </div>
+        <div class="antialiased px-24 py-4">
+          <p class="lg:text-xl md:text-l sm:text-m drop-shadow">Kontaktai</p>
+        </div>
+      </div>
+      <p class="text-center py-4">Visos teisės priklauso Emiliui Borusui</p>
+    </footer>
+  );
+}
 
 function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -31,46 +56,55 @@ function Navbar() {
               )}
           </nav> */
 
-    <nav class="bg-bermuda shadow-xl">
-      <div class="w-full px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between min-h-16 sm:h-16 flex-wrap gap-y-2 py-2">
+    <nav className="bg-bermuda shadow-xl">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between min-h-16 sm:h-16 flex-wrap gap-y-2 py-2">
 
-          <div class="flex-shrink-0">
-            <Link to="/" class="text-white text-2xl font-bold">
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-white text-2xl font-bold">
               25MIN
             </Link>
           </div>
 
-          <div class="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4">
 
             <Link to="/"
-              class="bg-bermuda-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="bg-bermuda-700 text-white px-3 py-2 rounded-md text-sm font-medium"
               aria-current="page">
               Pradžia
             </Link>
             <Link to="/"
-              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+              className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Apie
             </Link>
-            <Link to=""
-              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+            <Link to="/"
+              className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Visi blogai
             </Link>
 
-            <div class="h-5 w-px bg-white/40 mx-1 sm:mx-2" aria-hidden="true"></div>
+            <div className="h-5 w-px bg-white/40 mx-1 sm:mx-2" aria-hidden="true"></div>
             {!isAuthenticated ? (
               <>
-                <Link to="/prisijungti"
-                  class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Prisijungti</Link>
-                <Link to="/"
-                  class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Registruotis</Link>
+                <Link to="/login"
+                  className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Prisijungti</Link>
+                <Link to="/register"
+                  className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Registruotis</Link>
               </>
             ) : (
               <>
-                <Link to="/"
-                  class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
-                  {user?.name}
+                <Link to="/profile"
+                  className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+                  Profilis
                 </Link>
+                <Link to="/upload"
+                  className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
+                  Naujas blogas
+                </Link>
+                <div
+                  className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+                  onClick={handleLogout}>
+                  Atsijungti
+                </div>
               </>
             )}
 
@@ -83,35 +117,42 @@ function Navbar() {
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
+
       <Navbar />
       <hr />
-      <Routes>
-        { /*<Route path="/" element={<App />} /> */}
-        <Route path="/login" element={<LoginPage /> } />
 
-        {/* Protected Routes */}
+      <main className="flex-grow">
+        <Routes>
+          { /*<Route path="/" element={<App />} /> */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path='/' element={<MainPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+     
         <Route
-          path="/"
+          path="/upload"
           element={
             <ProtectedRoute>
-              {/* <Dashboard /> */}
+              {<UploadBlog /> }
             </ProtectedRoute>
           }
-        />
+        /> 
         <Route
-          path="/"
+          path="/profile"
           element={
             <ProtectedRoute>
-
-              { /*<Favorites /> */}
+              {<ProfilePage /> }
             </ProtectedRoute>
           }
-        />
+        /> 
+      
 
-        <Route path="*" element={<div>404 Not Found</div>} />
+          <Route path="*" element={<div>404 Not Found</div>} />
 
-      </Routes>
+        </Routes>
+      </main>
+
+      <Footer />
     </div>
   );
 }

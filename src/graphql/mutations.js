@@ -1,10 +1,8 @@
 import { gql } from '@apollo/client';
 
-// LOGIN_MUTATION: Siunčia email ir password, tikisi gauti token ir user info
-// Ši konstanta bus importuojama į jūsų LoginPage komponentą
 export const LOGIN_MUTATION = gql`
  
-  mutation LoginUser($email: String!, $password: String!) {
+  mutation Login($email: String!, $password: String!) {
 
     login(email: $email, password: $password) {
 
@@ -17,4 +15,36 @@ export const LOGIN_MUTATION = gql`
       }
     }
   }
+`;
+
+export const REGISTER_MUTATION = gql`
+ 
+  mutation Register($email: String!, $password: String!, $name: String!, $surname: String!) {
+
+    register(email: $email, password: $password, name: $name, surname: $surname) {
+
+      token
+      user {
+        id
+        email
+        name
+        surname
+      }
+    }
+  }
+`;
+
+export const CREATE_BLOG_MUTATION = gql`
+
+  mutation CreateBlog($name: String!, $desc: String!, $imagepath: String) {
+  createBlog(name: $name, desc: $desc, imagepath: $imagepath) {
+    id
+    name
+    desc
+    createdby
+    imageUrl
+    imagepath
+    createdon
+  }
+}
 `;

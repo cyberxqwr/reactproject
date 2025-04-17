@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Webas</title>
+    <link rel="stylesheet" href="../styles/tw.css" />
+    <link rel="stylesheet" href="../styles/unity.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  </head>
+  <body id="page-body" class="min-h-screen flex flex-col">
+    <nav class="bg-bermuda shadow-xl">
+      <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex items-center justify-between min-h-16 sm:h-16 flex-wrap gap-y-2 py-2"
+        >
+          <div class="flex-shrink-0">
+            <a href="../index.html" class="text-white text-2xl font-bold">
+              25MIN
+            </a>
+          </div>
+
+          <div class="flex items-center space-x-3 sm:space-x-4">
+            <a
+              href="../index.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Pradžia
+            </a>
+            <a
+              href="../about.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Apie
+            </a>
+            <a
+              href="../all_blogs.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Visi blogai
+            </a>
+
+            <div
+              class="h-5 w-px bg-white/40 mx-1 sm:mx-2"
+              aria-hidden="true"
+            ></div>
+
+            <button
+              id="settings-button"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Nustatymai
+            </button>
+
+            <a
+              href="login.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Prisijungti
+            </a>
+            <a
+              href="register.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Registruotis
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="settings-panel"
+      class="fixed top-0 right-0 h-full w-64 sm:w-80 bg-white dark:bg-gray-800 shadow-lg p-6 transform translate-x-full z-50"
+    >
+      <div class="flex justify-between items-center mb-6">
+        <p class="text-xl font-semibold dark:text-gray-200">Nustatymai</p>
+        <button
+          id="close-settings-button"
+          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Fonas (Režimas)</label
+        >
+        <div class="flex space-x-2">
+          <button
+            id="light-mode-btn"
+            class="px-3 py-1 border rounded text-sm dark:text-slate-100"
+          >
+            Šviesus
+          </button>
+          <button
+            id="dark-mode-btn"
+            class="px-3 py-1 border rounded text-sm dark:text-slate-100"
+          >
+            Tamsus
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="heading-color-input"
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Antraščių Spalva</label
+        >
+        <input
+          type="color"
+          id="heading-color-input"
+          class="w-full h-8 border"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Antraščių Dydis</label
+        >
+        <select
+          id="heading-size-select"
+          class="w-full border rounded p-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-slate-100"
+        >
+          <option value="text-xl dark:text-slate-100">Normalus (XL)</option>
+          <option value="text-2xl dark:text-slate-100">Didelis (2XL)</option>
+          <option value="text-3xl dark:text-slate-100">
+            Labai Didelis (3XL)
+          </option>
+          <option value="text-lg dark:text-slate-100">Mažas (LG)</option>
+        </select>
+      </div>
+    </div>
+    <div
+      id="settings-overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
+    ></div>
+
+    <div class="flex-grow bg-slate-100 dark:bg-gray-900 dark:text-gray-300">
+      <div class="pt-4">
+        <p style="font-size: 1.3em; margin-left: 30px">
+          <a href="../index.html" class="underline hover:decoration-solid"
+            >Pradžia</a
+          >
+          >
+          <a href="../all_blogs.html" class="underline hover:decoration-solid"
+            >Visi blogai</a
+          >
+          > Blogas
+        </p>
+      </div>
+
+      <main>
+        <h1
+          id="page-main-heading"
+          class="page-heading text-center font-semibold py-4"
+        >
+          Neatrasti Europos kampeliai: Keliaujant už didžiųjų turistų srautų
+        </h1>
+      </main>
+
+      <div
+        class="grid grid-cols-1 xl:grid-cols-12 lg:grid-cols-12 md:items-start"
+      >
+        <!-- article nest'as -->
+        <article class="xl:col-span-9 lg:col-span-8 md:col-span-8">
+          <!-- Pagrindinis blogo modelis -->
+
+          <div
+            class="flex flex-col items-center ml-8 mr-8 bg-bermuda/[.75] rounded-md drop-shadow-md mb-4 pb-4"
+          >
+            <img
+              src="/images/blog-pics/blog-pic-1-rsz.png"
+              alt="Blogo nuotrauka"
+              class="border border-black/30 rounded-md mt-4 w-4/5"
+            />
+            <p class="mt-4">Blogo autorius Emilis Borusas</p>
+            <img src="/images/line.svg" alt="Break line" id="blog-sep-line" />
+            <div class="m-4">
+              <p class="blog-paragraph in-blog" id="blog-paragraph">
+                <strong
+                  >Ar kada nors svajojote atrasti Europą iš kitos perspektyvos -
+                  be minios turistų, eilės prie lankytinų vietų ir jau įprastų
+                  Instagram nuotraukų? Tada šis įrašas skirtas būtent
+                  jums!</strong
+                ><br /><br />
+
+                Europa gali pasigirti begale lankytinų vietų, tačiau daug
+                keliautojų, pasikliaudami žinomais gidais ir populiariausiomis
+                rekomendacijomis, dažnai praleidžia neįtikėtinas, tačiau mažiau
+                žinomas vietoves. Jei norite atrasti Europą iš naujo ir
+                pasinerti į vietinį gyvenimą, kviečiu jus susipažinti su trimis
+                unikaliomis kryptimis.<br /><br />
+                <strong>1. Albarracín, Ispanija.</strong> Tai viduramžių
+                miestelis Ispanijoje, kuris atrodo lyg nukeliavęs laiku atgal į
+                praeitį. Jis įsikūręs Teruelo regione, apsuptas kalnų ir gilių
+                upių kanjonų. Raudoni Albarracín pastatai, siaurų gatvelių
+                labirintas ir senoviniai akmeniniai namai sukuria magišką
+                atmosferą, kurią sunku surasti kituose Ispanijos miestuose. Čia
+                nerasite didžiulių minios ar komercinių suvenyrų parduotuvių -
+                tik ramybę ir autentiškumą. <br /><br />
+                <strong>2. Soča slėnis, Slovėnija.</strong> Slovėnija tampa vis
+                populiaresne kryptimi dėl savo gamtos grožio, bet Soča slėnis
+                vis dar lieka paslaptimi daugeliui. Turistų trauką čia
+                atskleidžia nepaprasto grožio upė Soča, kurioje tyvuliuoja
+                neįtikėtino skaidrumo mėlynasis vanduo. Slėnyje taip pat gausu
+                žygių takų, todėl šią vietą ypač mėgsta aktyvaus poilsio
+                mėgėjai. Be to, galite išbandyti ir upės raftingą arba tiesiog
+                grožėtis gamtos vaizdais prie ramių Soča intakų.
+                <br /><br /><strong>3. Meteora, Graikija.</strong> Graikija
+                dažnai siejama su jūra, salomis ir antikinėmis šventyklomis,
+                tačiau nedaugelis žino apie Meteoros kalnų vienuolynus. Ant
+                aukštų, į dangų besistiebiančių uolų įsikūrę vienuolynai sudaro
+                unikalų gamtos ir žmogaus rankų kūrinį. Ši vietovė ne tik
+                kviečia pažinti nepaprastus Graikijos peizažus, bet ir atveria
+                vartus į istorinį vienuolių gyvenimą. Meteora yra viena iš tų
+                vietų, kurioje galite atitrūkti nuo šiuolaikinio pasaulio ir
+                pabūti su gamta bei ramybe. <br /><br />
+                Kelionės į mažiau žinomus Europos kampelius ne tik leidžia
+                atrasti autentiškus kraštovaizdžius, bet ir išvengti turistų
+                srautų bei rasti savo mažą, magišką pasaulį.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <div
+          class="ml-8 mr-8 bg-bermuda/[.75] rounded-md drop-shadow-md xl:col-span-3 lg:col-span-4 md:col-span-4 shadow-2xl"
+        >
+          <aside>
+            <p
+              class="text-center lg:text-2xl md:text-xl sm:text-l pt-4 underline"
+            >
+              DAUGIAU
+            </p>
+            <!-- Blogo aside modelis -->
+            <div>
+              <a href="00002-blog.html">
+                <img
+                  src="/images/blog-pics/500-200/blog-pic-2-500x200.png"
+                  class="border-black/30 border rounded-md block max-w-9/10 w-4/5 mx-auto mt-4"
+                  alt="Aside menu blog picture"
+                />
+              </a>
+              <br />
+              <p class="text-center">
+                <a
+                  href="00002-blog.html"
+                  class="text-center hover:text-slate-100 transition duration-150 ease-in-out"
+                >
+                  Solo kelionės – laisvė, nuotykiai ir augimas: patarimai
+                  pradedantiesiems
+                </a>
+              </p>
+              <img src="/images/line.svg" alt="Break line" class="my-4" />
+            </div>
+            <!-- Blogo aside kopijos pradžia -->
+            <div>
+              <a href="00003-blog.html">
+                <img
+                  src="/images/blog-pics/500-200/blog-pic-3-500x200.png"
+                  class="border-black/30 border rounded-md block max-w-9/10 w-4/5 mx-auto mt-4"
+                  alt="Aside menu blog picture"
+              /></a>
+              <br />
+
+              <p class="text-center pb-4">
+                <a
+                  href="00003-blog.html"
+                  class="hover:text-slate-100 transition duration-150 ease-in-out"
+                >
+                  3 įkvepiantys gamtos stebuklai, kuriuos verta pamatyti bent
+                  kartą gyvenime
+                </a>
+              </p>
+            </div>
+            <!-- Blogo aside kopijos pabaiga -->
+          </aside>
+        </div>
+      </div>
+      <script src="../script.js"></script>
+    </div>
+
+    <footer class="bg-bermuda text-white mt-8">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-3 justify-items-center mx-8 pt-4"
+      >
+        <div
+          class="border border-black/20 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Naudinga</p>
+        </div>
+        <div
+          class="border border-black/30 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Sekite mus</p>
+        </div>
+        <div
+          class="border border-black/30 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Kontaktai</p>
+        </div>
+      </div>
+      <p class="text-center py-4">
+        Visos teisės priklauso Emilis Borusas &copy2024
+      </p>
+    </footer>
+  </body>
+</html>

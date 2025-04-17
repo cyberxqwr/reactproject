@@ -1,0 +1,15 @@
+:root{
+
+    --headers: rgb(34,37,43);
+    --blog-p: rgba(61, 65, 73, 0.192);
+    --text: rgb(237,232,245);
+    --hovered-text: rgb(255, 255, 255);
+    --buttons: rgb(134,151,196);
+    --active-button: rgb(89, 120, 204);
+    --hovered-button: rgb(65, 97, 177);
+    --nav: rgb(112, 145, 230);
+    --side-bg: rgb(112, 145, 230);
+    --website-bg: rgb(219, 225, 238);
+    --blog-bg: rgba(76, 111, 187, 0.562);
+    --footer-bg: rgb(29, 56, 126);
+}

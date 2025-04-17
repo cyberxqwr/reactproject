@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
-import { LOGIN_MUTATION } from '../graphql/mutations'; // Importuojame mutaciją
-import { useAuth } from '../context/AuthContext';     // Importuojame AuthContext hook'ą
+import { REGISTER_MUTATION } from '../graphql/mutations';
+import { useAuth } from '../context/AuthContext';
 import '../index.css'
 
-function LoginPage() {
+function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION, {
+    const [registerUser, { loading, error }] = useMutation(REGISTER_MUTATION, {
         onCompleted: (data) => {
-            console.log("Login successful:", data);
+            console.log("Registracija sekminga:", data);
            
-            if (data?.login?.token && data?.login?.user) {
+            if (data?.register?.token && data?.register?.user) {
 
-                login(data.login.token, data.login.user);
+                login(data.register.token, data.register.user);
                 
                 navigate('/');
             } else {
@@ -28,7 +30,7 @@ function LoginPage() {
         },
         onError: (error) => {
             
-            console.error("Login mutation failed:", error.message);
+            console.error("Register mutation failed:", error.message);
         }
     });
 
@@ -38,14 +40,22 @@ function LoginPage() {
             alert("Prašome įvesti el. paštą ir slaptažodį.");
             return;
         }
+
+        if (!name) {
+            alert("Neįvestas vardas");
+            return;
+        }   else if (!surname) {
+            alert("Neįvesta pavardė");
+            return;
+        }
         console.log(`Bandoma prisijungti: ${email}`);
         
-        loginUser({ variables: { email, password } });
+        registerUser({ variables: { email, password, name, surname } });
     };
 
     return (
         <div className="grid justify-items-center">
-            <h2 className="text-3xl text-center mt-12">Prisijungimas</h2>
+            <h2 className="text-3xl text-center mt-12">Registracija</h2>
             <form onSubmit={handleSubmit}
             className="mt-12 flex flex-col items-center">
                 
@@ -75,20 +85,44 @@ function LoginPage() {
                         className="border border-black/[.30] rounded-md"
                     />
                 </div>
+                <div className='mt-5'>
+                    <label htmlFor="name"
+                    className="block text-center text-xl">Vardas</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="border border-black/[.30] rounded-md"
+                    />
+                </div>
+                <div className='mt-5'>
+                    <label htmlFor="surname"
+                    className="block text-center text-xl">Pavardė</label>
+                    <input
+                        type="text"
+                        id="surname"
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
+                        required
+                        className="border border-black/[.30] rounded-md"
+                    />
+                </div>
                
                 {error && <p style={{ color: 'red' }}>Klaida prisijungiant: {error.message}</p>}
 
                 <button type="submit" disabled={loading}
                 className="my-4 text-xl border border-black/[.10] drop-shadow rounded-md p-2
                 bg-slate-200 hover:bg-bermuda/[.50] transition ease-in-out">
-                    {loading ? 'Jungiamasi...' : 'Prisijungti'}
+                    {loading ? 'Vykdoma...' : 'Registruotis'}
                 </button>
             </form>
             <p>
-                Neturite paskyros? <Link to="/register" className="underline hover:text-bermuda hover:drop-shadow">Registruokitės</Link>
+                Jau turite paskyrą? <Link to="/login" className="underline hover:text-bermuda hover:drop-shadow">Prisijunkite</Link>
             </p>
         </div>
     );
 }
 
-export default LoginPage;
+export default RegisterPage;

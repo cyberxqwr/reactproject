@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Webas</title>
+    <link rel="stylesheet" href="./styles/tw.css" />
+    <link rel="stylesheet" href="./styles/unity.css" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+  </head>
+  <body id="page-body" class="min-h-screen flex flex-col">
+    <nav class="bg-bermuda shadow-xl">
+      <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div
+          class="flex items-center justify-between min-h-16 sm:h-16 flex-wrap gap-y-2 py-2"
+        >
+          <div class="flex-shrink-0">
+            <a href="index.html" class="text-white text-2xl font-bold">
+              25MIN
+            </a>
+          </div>
+
+          <div class="flex items-center space-x-3 sm:space-x-4">
+            <a
+              href="index.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Pradžia
+            </a>
+            <a
+              href="about.html"
+              class="bg-bermuda-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+              aria-current="page"
+            >
+              Apie
+            </a>
+            <a
+              href="all_blogs.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Visi blogai
+            </a>
+
+            <div
+              class="h-5 w-px bg-white/40 mx-1 sm:mx-2"
+              aria-hidden="true"
+            ></div>
+
+            <button
+              id="settings-button"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Nustatymai
+            </button>
+
+            <a
+              href="login.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Prisijungti
+            </a>
+            <a
+              href="register.html"
+              class="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
+            >
+              Registruotis
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="settings-panel"
+      class="fixed top-0 right-0 h-full w-64 sm:w-80 bg-white dark:bg-gray-800 shadow-lg p-6 transform translate-x-full z-50"
+    >
+      <div class="flex justify-between items-center mb-6">
+        <p class="text-xl font-semibold dark:text-gray-200">Nustatymai</p>
+        <button
+          id="close-settings-button"
+          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-2xl"
+        >
+          &times;
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Fonas (Režimas)</label
+        >
+        <div class="flex space-x-2">
+          <button
+            id="light-mode-btn"
+            class="px-3 py-1 border rounded text-sm dark:text-slate-100"
+          >
+            Šviesus
+          </button>
+          <button
+            id="dark-mode-btn"
+            class="px-3 py-1 border rounded text-sm dark:text-slate-100"
+          >
+            Tamsus
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="heading-color-input"
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Antraščių Spalva</label
+        >
+        <input
+          type="color"
+          id="heading-color-input"
+          class="w-full h-8 border"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-slate-100 mb-1"
+          >Antraščių Dydis</label
+        >
+        <select
+          id="heading-size-select"
+          class="w-full border rounded p-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-slate-100"
+        >
+          <option value="text-xl dark:text-slate-100">Normalus (XL)</option>
+          <option value="text-2xl dark:text-slate-100">Didelis (2XL)</option>
+          <option value="text-3xl dark:text-slate-100">
+            Labai Didelis (3XL)
+          </option>
+          <option value="text-lg dark:text-slate-100">Mažas (LG)</option>
+        </select>
+      </div>
+    </div>
+    <div
+      id="settings-overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
+    ></div>
+
+    <div class="flex-grow bg-slate-100 dark:bg-gray-900 dark:text-gray-300">
+      <div class="pt-4">
+        <p style="font-size: 1.3em; margin-left: 30px">
+          <a href="index.html" class="underline hover:decoration-solid"
+            >Pradžia</a
+          >
+          > Apie
+        </p>
+      </div>
+
+      <main>
+        <h1
+          id="page-main-heading"
+          class="page-heading text-center font-semibold py-4"
+        >
+          APIE 25MIN
+        </h1>
+      </main>
+
+      <div
+        class="grid grid-cols-1 xl:grid-cols-12 lg:grid-cols-12 md:items-start"
+      >
+        <!-- article nest'as -->
+        <article class="xl:col-span-9 lg:col-span-8 md:col-span-8">
+          <div
+            class="ml-8 mr-8 bg-bermuda/[.75] rounded-md drop-shadow-md mb-4 pb-4"
+          >
+            <h2 class="page-heading pl-4 pt-4 xl:text-left text-center">
+              Mūsų tikslas
+            </h2>
+            <div class="pl-4">
+              <p>
+                Mūsų tikslas - įkvėpti, edukuoti ir suartinti kelionių bei
+                gyvenimo džiaugsmo ieškančius žmones. Siekiame, kad mūsų
+                tinklaraštis būtų vieta, kurioje kiekvienas skaitytojas rastų
+                įdomių kelionių idėjų, praktiškų patarimų ir motyvacijos išvykti
+                į nuotykį, nesvarbu, ar tai būtų savaitgalis šalia namų, ar
+                kelionė į kitą pasaulio kraštą. Mūsų straipsniai padės atrasti,
+                kas svarbu keliaujant - nuo kultūros pažinimo iki atsakingo ir
+                sąmoningo kelionių planavimo.
+              </p>
+            </div>
+
+            <img
+              src="/images/line.svg"
+              alt="Break line"
+              class="black w-4/5 mt-4 block w-4/5 mx-auto"
+            />
+
+            <h2 class="page-heading pl-4 pt-4 xl:text-left text-center">
+              Mūsų idėja
+            </h2>
+            <div class="pl-4">
+              <p>
+                Esame įsitikinę, kad kelionės praturtina gyvenimą ir ugdo žmogų.
+                Mūsų idėja - suburti bendruomenę žmonių, kurie domisi pasauliu
+                ir siekia augti per keliones. Šiame puslapyje dalinamės ne tik
+                tradicinėmis kelionių kryptimis, bet ir unikaliomis vietomis,
+                kurias pamiršta daugelis gidų. Tikime, kad kelionės įdomios
+                tada, kai gali atrasti kažką nepaprasto ir netikėto. Norime, kad
+                kiekviena kelionė, kurią planuosite su mūsų pagalba, būtų
+                ypatinga, tikslinga ir sukurta su džiaugsmu.
+              </p>
+            </div>
+
+            <img
+              src="/images/line.svg"
+              alt="Break line"
+              class="black w-4/5 mt-4 block w-4/5 mx-auto"
+            />
+
+            <h2 class="page-heading pl-4 pt-4 xl:text-left text-center">
+              Mūsų partneriai
+            </h2>
+            <div class="pl-4">
+              <p>
+                Mes bendradarbiaujame su įvairiais kelionių, apgyvendinimo ir
+                laisvalaikio organizatoriais, kurie padeda mums pateikti
+                skaitytojams naudingą ir aktualią informaciją. Mūsų partneriai
+                padeda pasiūlyti geriausias galimybes iš viso pasaulio, taip
+                užtikrindami aukštą kelionių kokybę ir naujausias idėjas.
+                Dirbdami su atsakingais ir patikimais partneriais, siekiame, kad
+                kelionės būtų patogios, prieinamos ir, svarbiausia,
+                nepamirštamos
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <div
+          class="ml-8 mr-8 bg-bermuda/[.75] rounded-md drop-shadow-md xl:col-span-3 lg:col-span-4 md:col-span-4 shadow-2xl"
+        >
+          <aside>
+            <p
+              class="text-center xl:text-2xl lg:text-2xl md:text-xl sm:text-l pt-4 underline"
+            >
+              PALIKITE ATSILIEPIMĄ
+            </p>
+            <form id="review-form" class="flex flex-col items-center">
+              <label for="review-email" class="text-md my-2">El. paštas:</label>
+              <input
+                type="email"
+                class="drop-shadow-md w-4/5 rounded-md"
+                id="review-email"
+                name="email"
+                required
+              />
+              <p
+                class="text-red-500 text-sm font-semibold mt-1 hidden"
+                data-error-for="review-email"
+              >
+                Prašome įvesti el. pašto adresą.
+              </p>
+              <br />
+              <label for="review-text" class="text-md mb-2 mt-2"
+                >Atsiliepimas:</label
+              >
+              <input
+                type="text"
+                class="drop-shadow-md w-4/5 rounded-md"
+                id="review-text"
+                name="text"
+              />
+              <p
+                class="text-red-500 text-sm font-semibold mt-1 hidden"
+                data-error-for="review-text"
+              >
+                Prašome įvesti atsiliepimą.
+              </p>
+              <br />
+
+              <input
+                type="submit"
+                class="mt-4 bg-slate-100 border rounded-md border-black/50 w-1/2 drop-shadow-md mb-4"
+                value="Siųsti"
+              />
+            </form>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-bermuda text-white pt-8">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-3 justify-items-center mx-8 pt-4"
+      >
+        <div
+          class="border border-black/20 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Naudinga</p>
+        </div>
+        <div
+          class="border border-black/30 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Sekite mus</p>
+        </div>
+        <div
+          class="border border-black/30 rounded-md antialiased px-24 py-4 shadow-sm"
+        >
+          <p class="lg:text-xl md:text-l sm:text-m">Kontaktai</p>
+        </div>
+      </div>
+      <p class="text-center py-4">
+        Visos teisės priklauso Emilis Borusas &copy2024
+      </p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

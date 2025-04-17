@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#ww_0ec8394aca416 {
+    display: block;
+    max-width: 100%;
+    width: 90% !important;
+    margin: 0px auto !important;
+    margin-bottom: 20px !important;
+  }
