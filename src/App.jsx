@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import EditBlogPage from './pages/EditBlogPage';
 import DeleteBlogPage from './pages/DeleteBlogPage';
+import AboutPage from './pages/AboutPage';
 
 function Footer() {
 
@@ -71,11 +72,10 @@ function Navbar() {
           <div className="flex items-center space-x-3 sm:space-x-4">
 
             <Link to="/"
-              className="bg-bermuda-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">
+              className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Pradžia
             </Link>
-            <Link to="/"
+            <Link to="/about"
               className="text-white hover:bg-bermuda-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">
               Apie
             </Link>
@@ -130,6 +130,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path='/' element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/about" element={<AboutPage />} />
 
           <Route
             path="/upload"

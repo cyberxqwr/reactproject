@@ -21,20 +21,7 @@ function Aside() {
   
             <p className="text-center lg:text-2xl md:text-xl sm:text-l pt-4 underline mb-4">ORAI</p>
   
-            <div
-              id="ww_0ec8394aca416"
-              v="1.3"
-              loc="auto"
-              a='{"t":"responsive","lang":"lt","sl_lpl":1,"ids":["wl9775"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(32,137,188,1)","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'
-            >
-              More forecasts:
-              <a
-                href="https://oneweather.org/melbourne/30_days/"
-                id="ww_0ec8394aca416_u"
-                target="_blank"
-                >30 days Melbourne weather
-                </a>
-            </div>
+            <a className="weatherwidget-io" href="https://forecast7.com/en/54d6925d28/vilnius/" data-label_1="VILNIUS" data-label_2="WEATHER" data-theme="original" >VILNIUS WEATHER</a>
         </aside>
   
       </div>
