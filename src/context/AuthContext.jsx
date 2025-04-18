@@ -29,21 +29,18 @@ export const AuthProvider = ({ children }) => {
 
             if (error) {
                 
-                console.error("AuthContext: Error fetching current user:", error.message);
                 logout();
             } else if (data?.currentUser) {
-                console.log("AuthContext: Current user fetched:", data.currentUser);
                 setUser(data.currentUser);
                 setIsAuthenticated(true);
                 setToken(currentToken);
             } else {
                 
-                 console.warn("AuthContext: currentUser query succeeded but returned no user.");
                  logout();
             }
         } catch (err) {
-            // Kitokios klaidos
-            console.error("AuthContext: Unexpected error fetching user:", err);
+
+            console.error(err);
             logout();
         } finally {
             setLoading(false);
@@ -56,20 +53,15 @@ export const AuthProvider = ({ children }) => {
     }, [fetchCurrentUser]); 
 
     const login = useCallback((newToken, userData) => {
-        console.log("AuthContext: Logging in user:", userData);
         localStorage.setItem('authToken', newToken);
         setToken(newToken);
         setUser(userData);
         setIsAuthenticated(true);
-        // navigate('/'); // Galima nukreipti čia arba komponente
     }, []); 
 
-    const register = useCallback((newToken, userData) => {
-        localStorage.setItem();
-    })
 
     const logout = useCallback(() => {
-        console.log("AuthContext: Logging out");
+        console.log("AuthContext: Prisijungiama");
         localStorage.removeItem('authToken');
         setToken(null);
         setUser(null);

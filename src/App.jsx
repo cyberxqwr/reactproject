@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { useAuth } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute';
-import { Routes, Route, Link, /*useNavigate*/ } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import './index.css'
 import LoginPage from './pages/LoginPage';
 import UploadBlog from './pages/UploadBlog';
 import MainPage from './pages/MainPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import EditBlogPage from './pages/EditBlogPage';
+import DeleteBlogPage from './pages/DeleteBlogPage';
 
 function Footer() {
 
@@ -128,24 +130,41 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path='/' element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
-     
-        <Route
-          path="/upload"
-          element={
-            <ProtectedRoute>
-              {<UploadBlog /> }
-            </ProtectedRoute>
-          }
-        /> 
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              {<ProfilePage /> }
-            </ProtectedRoute>
-          }
-        /> 
-      
+
+          <Route
+            path="/upload"
+            element={
+              <ProtectedRoute>
+                {<UploadBlog />}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                {<ProfilePage />}
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/editblog/:blogId"
+            element={
+              <ProtectedRoute>
+                {<EditBlogPage />}
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/deleteblog/:blogId"
+            element={
+              <ProtectedRoute>
+                {<DeleteBlogPage />}
+              </ProtectedRoute>
+            }
+          />
+
 
           <Route path="*" element={<div>404 Not Found</div>} />
 

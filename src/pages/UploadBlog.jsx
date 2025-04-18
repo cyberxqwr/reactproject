@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate, Link } from 'react-router-dom';
 import { CREATE_BLOG_MUTATION } from '../graphql/mutations';
-import IndexBlogCard from '../components/IndexBlogCard';
+import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
 function UploadBlog() {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedFileName, setSelectedFileName] = useState('Nėra pasirinkto failo');
-    const [imagePath, setImagePath] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [name, setName] = useState('');
     const [desc, setDesc] = useState('');
+    const navigate = useNavigate();
 
     const handleFileChange = (event) => {
         const file = (event.target.files[0]);
@@ -35,7 +34,7 @@ function UploadBlog() {
         formData.append('blogImage', selectedFile);
 
         try {
-            const response = await fetch('http://localhost:3001/api/upload/blog-image', { // Įsitikinkite, kad URL teisingas
+            const response = await fetch('http://localhost:3001/api/upload/blog-image', {
                 method: 'POST',
                 body: formData,
             });
@@ -54,7 +53,12 @@ function UploadBlog() {
         }
     }
 
-    const [createBlogMutation, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_BLOG_MUTATION);
+    const [createBlogMutation, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_BLOG_MUTATION, {
+        onCompleted: () => {
+        alert('Sėkmingai sukurtas blogas');
+        navigate("/");
+        }
+    });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -93,7 +97,7 @@ function UploadBlog() {
             <h2 className="text-3xl text-center my-12">Naujo blogo įkėlimas</h2>
             <form onSubmit={handleSubmit}
                 className="mt-12 flex flex-col items-center w-full max-w-2xl">
-                <div>
+                <div className='w-full'>
                     <label htmlFor="name"
                         className="block text-center text-xl">Pavadinimas</label>
                     <input
@@ -102,7 +106,7 @@ function UploadBlog() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="border border-black/[.30] rounded-md"
+                        className="block mx-auto w-4/5 text-center border border-black/[.30] rounded-md"
                     />
                 </div>
                 <div className='mt-5 w-full'>

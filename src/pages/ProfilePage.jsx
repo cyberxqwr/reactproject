@@ -12,14 +12,14 @@ function ProfilePage() {
 
     if (loading) return (<p>Kraunami blogai.</p>)
 
-    const blogs = data?.blogs || [];
+    const blogs = data?.blogsUser || [];
 
     return (
 
         <>
             <div className="grid grid-cols-1 xl:grid-cols-12 lg:grid-cols-12 gap-8 p-4 md:p-8">
 
-                <div className="xl:col-span-9 lg:col-span-8 md:col-span-12"> {/* Mobiliesiems užima visą plotį */}
+                <div className="xl:col-span-9 lg:col-span-8 md:col-span-12">
                     <h2 className="text-2xl font-bold mb-4">Mano Blog'ai</h2>
 
 

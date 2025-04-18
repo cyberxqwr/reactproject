@@ -2,12 +2,11 @@ import { gql } from '@apollo/client';
 
 export const CURRENT_USER_QUERY = gql`
   query CurrentUser {
-    currentUser { # Pavadinimas turi atitikti Query tipą jūsų backend schemoje
+    currentUser {
       id
       email
-      name      # Pridėkite laukus, kuriuos grąžina jūsų backend
+      name
       surname
-      # ... kiti reikalingi vartotojo laukai
     }
   }
 `;
@@ -32,6 +31,19 @@ export const GET_BLOGS_BY_USER_QUERY = gql`
       name
       desc
       createdon
+      imageUrl
+    }
+  }
+`;
+
+export const GET_BLOG_BY_ID = gql`
+  query GetBlogByID($id: ID!){
+    blogId(id: $id) {
+      id
+      name
+      desc
+      createdon
+      imagepath
       imageUrl
     }
   }

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate, Link } from 'react-router-dom';
-import { LOGIN_MUTATION } from '../graphql/mutations'; // Importuojame mutaciją
-import { useAuth } from '../context/AuthContext';     // Importuojame AuthContext hook'ą
+import { LOGIN_MUTATION } from '../graphql/mutations';
+import { useAuth } from '../context/AuthContext';
 import '../index.css'
 
 function LoginPage() {

@@ -48,3 +48,25 @@ export const CREATE_BLOG_MUTATION = gql`
   }
 }
 `;
+
+export const EDIT_BLOG_MUTATION = gql`
+
+  mutation UpdateBlog($id: ID!, $name: String!, $desc: String!, $imagepath: String!) {
+  updateBlog(id: $id, name: $name, desc: $desc, imagepath: $imagepath) {
+    id
+    name
+    desc
+    createdby
+    imageUrl
+    imagepath
+    createdon
+  }
+}
+`;
+
+export const DELETE_BLOG_MUTATION = gql`
+
+  mutation DeleteBlog($id: ID!) {
+  deleteBlog(id: $id)
+}
+`;
